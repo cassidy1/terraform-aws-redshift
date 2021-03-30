@@ -40,7 +40,7 @@ module "sg" {
 module "redshift" {
   source = "../../"
 
-  cluster_identifier      = var.redshift_name
+  cluster_identifier      = var.name
   cluster_node_type       = var.node_type
   cluster_number_of_nodes = 1
 
