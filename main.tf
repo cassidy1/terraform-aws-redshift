@@ -112,11 +112,3 @@ resource "aws_redshift_parameter_group" "this" {
 
   tags = var.tags
 }
-
-resource "aws_redshift_subnet_group" "this" {
-  name        = var.cluster_identifier
-  description = "Redshift subnet group of ${var.cluster_identifier}"
-  subnet_ids  = var.subnets
-
-  tags = var.tags
-}
