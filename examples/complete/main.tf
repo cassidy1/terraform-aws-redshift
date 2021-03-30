@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = var.region
 }
 
 ######
@@ -9,12 +9,12 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 2.0"
 
-  name = "demo-vpc"
+  name = var.name
 
-  cidr = "10.10.0.0/16"
+  cidr = var.cidr
 
-  azs              = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
-  redshift_subnets = ["10.10.41.0/24", "10.10.42.0/24", "10.10.43.0/24"]
+  azs              = var.azs
+  redshift_subnets = var.redshift_subnets
 }
 
 ###########################
@@ -24,7 +24,7 @@ module "sg" {
   source  = "terraform-aws-modules/security-group/aws//modules/redshift"
   version = "~> 3.0"
 
-  name   = "demo-redshift"
+  name   = var.name
   vpc_id = module.vpc.vpc_id
 
   # Allow ingress rules to be accessed only within current VPC
@@ -40,16 +40,16 @@ module "sg" {
 module "redshift" {
   source = "../../"
 
-  cluster_identifier      = "my-cluster"
-  cluster_node_type       = "dc1.large"
+  cluster_identifier      = var.name
+  cluster_node_type       = var.node_type
   cluster_number_of_nodes = 1
 
-  cluster_database_name   = "mydb"
-  cluster_master_username = "mydbuser"
-  cluster_master_password = "MySecretPassw0rd"
+  cluster_database_name   = var.db_name
+  cluster_master_username = var.db_user
+  cluster_master_password = var.db_password
 
   subnets                = module.vpc.redshift_subnets
   vpc_security_group_ids = [module.sg.this_security_group_id]
 
-  #  redshift_subnet_group_name = module.vpc.redshift_subnet_group
+  redshift_subnet_group_name = module.vpc.redshift_subnet_group
 }
