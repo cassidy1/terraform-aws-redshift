@@ -9,7 +9,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 2.0"
 
-  name = var.name
+  name = "demo-vpc"
 
   cidr = var.cidr
 
@@ -24,7 +24,7 @@ module "sg" {
   source  = "terraform-aws-modules/security-group/aws//modules/redshift"
   version = "~> 3.0"
 
-  name   = var.name
+  name   = "demo-redshift"
   vpc_id = module.vpc.vpc_id
 
   # Allow ingress rules to be accessed only within current VPC
@@ -40,7 +40,7 @@ module "sg" {
 module "redshift" {
   source = "../../"
 
-  cluster_identifier      = var.name
+  cluster_identifier      = var.redshift_name
   cluster_node_type       = var.node_type
   cluster_number_of_nodes = 1
 
