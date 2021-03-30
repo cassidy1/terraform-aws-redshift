@@ -91,7 +91,7 @@ variable "vpc_security_group_ids" {
 variable "final_snapshot_identifier" {
   description = "(Optional) The identifier of the final snapshot that is to be created immediately before deleting the cluster. If this parameter is provided, 'skip_final_snapshot' must be false."
   type        = string
-  default     = ""
+  default     = "redshift-demo"
 }
 
 variable "skip_final_snapshot" {

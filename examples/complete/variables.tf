@@ -31,5 +31,5 @@ variable "db_user" {
 }
 
 variable "db_password" {
-    default = "supersecurepassword"
+    default = "SuperSecurePassw0rd"
 }
